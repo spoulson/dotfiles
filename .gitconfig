@@ -1,0 +1,13 @@
+[color]
+	ui = auto
+[alias]
+	st = status
+	br = branch -v
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+[core]
+	editor = vi
+[user]
+	name = Shawn Poulson
+	email = spoulson@explodingcoder.com
+[push]
+	default = current
