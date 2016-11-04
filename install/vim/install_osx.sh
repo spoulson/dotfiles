@@ -1,7 +1,7 @@
 #!/bin/sh
 # Install latest vim and MacVim for OSX.
 #
-# WARNING: This is a destructive install that will override .vimrc and vim
+# WARNING: This is a destructive install that will overwrite .vimrc and vim
 # plugins.
 
 SCRIPT_DIR=$(dirname $0)
@@ -10,6 +10,7 @@ brew install macvim --with-override-system-vim
 brew install vim
 brew install cmake
 brew linkapps
+hash -r
 
 # Configure plugins
 mkdir -p ~/.vim/bundle
