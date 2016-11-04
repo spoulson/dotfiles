@@ -1,11 +1,16 @@
 #!/bin/sh
 # Install latest vim and MacVim for OSX.
 #
+# Prerequisites:
+# * Install XCode with command line tools.
+#   http://railsapps.github.io/xcode-command-line-tools.html
+#
 # WARNING: This is a destructive install that will overwrite .vimrc and vim
 # plugins.
 
 SCRIPT_DIR=$(dirname $0)
 
+brew install ruby
 brew install macvim --with-override-system-vim
 brew install vim
 brew install cmake
