@@ -143,3 +143,5 @@ map gB :bprevious<cr>
 command Jsontidy execute "%!python -m json.tool"
 command Xmltidy execute "%!xmllint --format -"
 
+" Increase number of gitgutter marks.
+let g:gitgutter_max_signs = 2048
