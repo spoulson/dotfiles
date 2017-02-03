@@ -167,6 +167,9 @@ map <leader>bt :tab sball<CR>
 
 " Increase number of gitgutter marks.
 let g:gitgutter_max_signs = 2048
+"
+" Switch symbol under cursor.
+map <leader>s :Switch<CR>
 
 " MacVim customizations.
 if has("gui_macvim")
