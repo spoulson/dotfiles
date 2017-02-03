@@ -41,6 +41,10 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'severin-lemaignan/vim-minimap'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'mhinz/vim-startify'
+Plugin 'pangloss/vim-javascript'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-session'
+Plugin 'AndrewRadev/switch.vim'
 
 " Color schemes.
 " Plugin 'altercation/vim-colors-solarized' " solarized
@@ -143,15 +147,38 @@ map gB :bprevious<cr>
 command Jsontidy execute "%!python -m json.tool"
 command Xmltidy execute "%!xmllint --format -"
 
+" Autosave session.
+let g:session_autosave = 'yes'
+let g:session_autoload = 'yes'
+
+" Syntastic settings.
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
+
+" Map convert buffers to tabs.
+map <leader>bt :tab sball<CR>
+
 " Increase number of gitgutter marks.
 let g:gitgutter_max_signs = 2048
 
 " MacVim customizations.
 if has("gui_macvim")
+  set macmeta
   " Press Ctrl-Tab to switch between open tabs (like browser tabs) to
   " the right side. Ctrl-Shift-Tab goes the other way.
   noremap <C-Tab> :tabnext<CR>
   noremap <C-S-Tab> :tabprev<CR>
+  noremap <M-l> :bnext!<CR>
+  noremap <M-h> :bprev!<CR>
+  noremap <M-]> :bnext!<CR>
+  noremap <M-[> :bprev!<CR>
 
   " Switch to specific tab numbers with Command-number.
   noremap <D-1> :tabn 1<CR>
