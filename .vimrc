@@ -180,8 +180,8 @@ if has("gui_macvim")
   noremap <C-S-Tab> :tabprev<CR>
   noremap <M-l> :bnext!<CR>
   noremap <M-h> :bprev!<CR>
-  noremap <M-]> :bnext!<CR>
-  noremap <M-[> :bprev!<CR>
+  noremap <D-]> :bnext!<CR>
+  noremap <D-[> :bprev!<CR>
 
   " Switch to specific tab numbers with Command-number.
   noremap <D-1> :tabn 1<CR>
