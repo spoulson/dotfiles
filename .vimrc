@@ -30,7 +30,9 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-surround'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'Valloric/YouCompleteMe'
+if version > 730
+	Plugin 'Valloric/YouCompleteMe'
+endif
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'wesQ3/vim-windowswap'
