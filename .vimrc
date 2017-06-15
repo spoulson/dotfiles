@@ -1,4 +1,6 @@
 " Shawn Poulson's .vimrc
+" http://git.sevone.com/spoulson/dotfiles
+" git@git.sevone.com:spoulson/dotfiles.git
 "
 " Pre-requisites:
 " * Powerline compatible font for your terminal application due to use of vim-airline.
@@ -19,48 +21,62 @@ let g:solarized_termcolors=256
 set t_Co=256
 
 " Plugins.
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-surround'
-Plugin 'kien/ctrlp.vim'
-Plugin 'scrooloose/nerdtree'
-if version > 730
-	Plugin 'Valloric/YouCompleteMe'
+" Auto-install vim-plug.
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'wesQ3/vim-windowswap'
-Plugin 'kshenoy/vim-signature'
-Plugin 'joonty/vdebug'
-Plugin 'rking/ag.vim'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'severin-lemaignan/vim-minimap'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'mhinz/vim-startify'
-Plugin 'pangloss/vim-javascript'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-session'
-Plugin 'AndrewRadev/switch.vim'
+call plug#begin('~/.vim/plugged')
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-surround'
+Plug 'kien/ctrlp.vim'
+Plug 'Valloric/YouCompleteMe'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'wesQ3/vim-windowswap'
+Plug 'kshenoy/vim-signature'
+" Plug 'joonty/vdebug'
+Plug 'rking/ag.vim'
+Plug 'tomtom/tcomment_vim'
+Plug 'vim-syntastic/syntastic'
+Plug 'mhinz/vim-startify'
+" Plug 'othree/yajs.vim'
+" Plug 'othree/es.next.syntax.vim'
+" Plug 'isRuslan/vim-es6'
+" Plug 'pangloss/vim-javascript'
+Plug 'jelera/vim-javascript-syntax'
+" Plug 'mxw/vim-jsx'
+" Plug 'ternjs/tern_for_vim'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
+Plug 'AndrewRadev/switch.vim'
+Plug 'junegunn/fzf'
+Plug 'matze/vim-move'
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-indent' | Plug 'kana/vim-textobj-user'
 
 " Color schemes.
-" Plugin 'altercation/vim-colors-solarized' " solarized
-" Plugin 'gothic'
-" Plugin 'molokai'
-" Plugin 'railscasts'
-" Plugin 'croaker/mustang-vim' " mustang
-" Plugin 'jonathanfilip/vim-lucius' " lucius
-" Plugin 'ciaranm/inkpot' " inkpot
-" Plugin 'zenburn'
-" Plugin 'fugalh/desert.vim' " desert
-Plugin 'morhetz/gruvbox'
+" Plug 'altercation/vim-colors-solarized' " solarized
+" Plug 'gothic'
+" Plug 'molokai'
+" Plug 'railscasts'
+" Plug 'croaker/mustang-vim' " mustang
+" Plug 'jonathanfilip/vim-lucius' " lucius
+" Plug 'ciaranm/inkpot' " inkpot
+" Plug 'zenburn'
+" Plug 'fugalh/desert.vim' " desert
+Plug 'morhetz/gruvbox'
 
-call vundle#end()
+" All of your Plugins must be added before the following line
+call plug#end()
+
+" set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=/usr/local/opt/fzf
+
 filetype plugin indent on
 
 " Color scheme.
@@ -141,13 +157,16 @@ set sessionoptions+=tabpages,globals
 " YouCompleteMe.
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
 
+" Browse .spk files with zip browser.
+au BufReadCmd *.spk call zip#Browse(expand("<amatch>"))
+
 " Easy switching buffers.
 map gb :bnext<cr>
 map gB :bprevious<cr>
 
 " Tidy tools.
-command Jsontidy execute "%!python -m json.tool"
-command Xmltidy execute "%!xmllint --format -"
+command! Jsontidy execute "%!python -m json.tool"
+command! Xmltidy execute "%!xmllint --format -"
 
 " Autosave session.
 let g:session_autosave = 'yes'
@@ -169,9 +188,37 @@ map <leader>bt :tab sball<CR>
 
 " Increase number of gitgutter marks.
 let g:gitgutter_max_signs = 2048
-"
+
 " Switch symbol under cursor.
 map <leader>s :Switch<CR>
+
+" Tern settings.
+" let g:tern_show_argument_hints='on_hold'
+" let g:tern_map_keys=1
+
+" Syntax highlighting rules.
+augroup filetypedetect
+	au BufRead,BufNewFile .tern-project set filetype=json
+	au BufRead,BufNewFile .babelrc set filetype=json
+	au BufRead,BufNewFile .flowconfig set filetype=dosini
+	au BufRead,BufNewFile .npmrc set filetype=dosini
+	au BufRead,BufNewFile .sequelize set filetype=javascript
+augroup END
+
+" Map x to a different register than d.
+vmap X "_d
+vmap x "_d
+
+" netrw customizations.
+" https://shapeshed.com/vim-netrw/
+let g:netrw_banner = 0
+" let g:netrw_liststyle = 3
+" let g:netrw_browse_split = 4
+" let g:netrw_winsize = 25
+" augroup ProjectDrawer
+" 	autocmd!
+" 	autocmd VimEnter * :Vexplore
+" augroup END
 
 " MacVim customizations.
 if has("gui_macvim")
