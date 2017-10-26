@@ -276,6 +276,9 @@ augroup END
 vmap X "_d
 vmap x "_d
 
+" Toggle paste mode: ;p.
+set pastetoggle=;p
+
 " netrw customizations.
 " https://shapeshed.com/vim-netrw/
 let g:netrw_banner = 0
