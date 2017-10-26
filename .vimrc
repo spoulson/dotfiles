@@ -28,36 +28,103 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
 call plug#begin('~/.vim/plugged')
+" vim-airline: Powerline-like status line.
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
+" vim-fugitive: Git commands
 Plug 'tpope/vim-fugitive'
+
+" vim-gitgutter: Show git diff symbols in the gutter.
 Plug 'airblade/vim-gitgutter'
+
+" vim-surround: Manipulate quotes, brackets, and stuff.
 Plug 'tpope/vim-surround'
+
+" CtrlP: Find files by name.
 Plug 'kien/ctrlp.vim'
-Plug 'Valloric/YouCompleteMe'
+
+" YouCompleteMe: Autocompletion popups.
+" Requires compiling server executable.
+" It rarely works right and not portable.
+" Use VimCompletesMe, instead.
+" Plug 'Valloric/YouCompleteMe'
+
+" VimCompletesMe: Tab completion popups.
+Plug 'ajh17/VimCompletesMe'
+
+" vim-indent-guides: Indicate indent level by coloration.
 Plug 'nathanaelkane/vim-indent-guides'
+
+" editorconfig: Parse .editorconfig files.
 Plug 'editorconfig/editorconfig-vim'
+
+" vim-windowswap: ?
 Plug 'wesQ3/vim-windowswap'
+
+" vim-signature: Toggle, display, and navigate marks.
 Plug 'kshenoy/vim-signature'
+
+" Vdebug: can debug PHP.
 " Plug 'joonty/vdebug'
+
+" Ag: The Silver Searcher, search in files.
+" Must install ag tool. https://github.com/ggreer/the_silver_searcher#installing
 Plug 'rking/ag.vim'
+
+" Tcomment: Code commenting commands.
 Plug 'tomtom/tcomment_vim'
+
+" vim-syntastic: Syntax checking tools.
 Plug 'vim-syntastic/syntastic'
+
+" vim-startify: Default UI on startup.
 Plug 'mhinz/vim-startify'
+
+" yajs: Javascript syntax highlighting.
 " Plug 'othree/yajs.vim'
+
+" es-Next-Syntax: Javascript syntax highlighting.
 " Plug 'othree/es.next.syntax.vim'
+
+" vim-es6: Javascript syntax highlighting
 " Plug 'isRuslan/vim-es6'
+
+" vim-javascript: Javascript syntax highlighting.
 " Plug 'pangloss/vim-javascript'
+
+" vim-javascript-syntax: Javascript syntax highlighting.
 Plug 'jelera/vim-javascript-syntax'
+
+" vim-jsx: Javascript/JSX syntax highlighting.
 " Plug 'mxw/vim-jsx'
+
+" tern for vim: Code analysis tool for Javascript.
 " Plug 'ternjs/tern_for_vim'
+
+" vim-misc: Required for vim-session.
 Plug 'xolox/vim-misc'
+
+" vim-session: Editor session state save/restore.
 Plug 'xolox/vim-session'
+
+" switch: Toggle common words.
 Plug 'AndrewRadev/switch.vim'
+
+" FZF: Fuzzy finder.  Find files by name.
+" Must install fzf tool. https://github.com/junegunn/fzf#installation
 Plug 'junegunn/fzf'
+
+" vim-move: Move lines and selections up and down.
 Plug 'matze/vim-move'
+
+" vim-textobj-*: Text object enhancements.
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent' | Plug 'kana/vim-textobj-user'
+
+" comittia: When vim launches from git commit, show 3 way split of commit
+" message editor, git status, and git diff.
+Plug 'rhysd/committia.vim'
 
 " Color schemes.
 " Plug 'altercation/vim-colors-solarized' " solarized
