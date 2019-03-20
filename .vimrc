@@ -17,7 +17,7 @@ set viminfo='100,n$HOME/.viminfo
 
 " Allow .vimrc/.vim work in alternate path outside of home dir.
 " Usage: vim -u <path_to_vimrc>
-let $VIMHOME = expand($MYVIMRC . ':p:h') . '/.vim'
+let $VIMHOME = fnamemodify($MYVIMRC, ':p:h') . '/.vim'
 set rtp^=$VIMHOME
 
 " Color scheme.
