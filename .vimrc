@@ -13,6 +13,7 @@
 set nocompatible
 set hidden
 filetype off
+set viminfo='100,n$HOME/.viminfo
 
 " Color scheme.
 syntax on
@@ -32,8 +33,11 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" vim-fugitive: Git commands
+" vim-fugitive: Git commands.
 Plug 'tpope/vim-fugitive'
+
+" vim-gitv: gitk-like repository viewer.
+Plug 'gregsexton/gitv', {'on': ['Gitv']}
 
 " vim-gitgutter: Show git diff symbols in the gutter.
 Plug 'airblade/vim-gitgutter'
@@ -51,7 +55,17 @@ Plug 'kien/ctrlp.vim'
 " Plug 'Valloric/YouCompleteMe'
 
 " VimCompletesMe: Tab completion popups.
-Plug 'ajh17/VimCompletesMe'
+" Plug 'ajh17/VimCompletesMe'
+
+" Deoplete: Auto completion popups.
+" if has('nvim')
+" 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" else
+" 	Plug 'Shougo/deoplete.nvim'
+" 	Plug 'roxma/nvim-yarp'
+" 	Plug 'roxma/vim-hug-neovim-rpc'
+" endif
+" let g:deoplete#enable_at_startup = 1
 
 " vim-indent-guides: Indicate indent level by coloration.
 Plug 'nathanaelkane/vim-indent-guides'
@@ -93,14 +107,25 @@ Plug 'mhinz/vim-startify'
 " vim-javascript: Javascript syntax highlighting.
 " Plug 'pangloss/vim-javascript'
 
-" vim-javascript-syntax: Javascript syntax highlighting.
+" vim-javascript-syntax: Javascript syntax highlighting. (best)
 Plug 'jelera/vim-javascript-syntax'
+
+" javascript-libraries-syntax: Javascript syntax highlighting for popular libraries.
+" Plug 'othree/javascript-libraries-syntax.vim'
 
 " vim-jsx: Javascript/JSX syntax highlighting.
 " Plug 'mxw/vim-jsx'
 
 " tern for vim: Code analysis tool for Javascript.
 " Plug 'ternjs/tern_for_vim'
+
+" Markdown-Syntax: Markdown syntax highlighting.
+" Review: Not as good syntax highlighting and faulty indentation.  Use
+" built-in Markdown instead.
+" Plug 'plasticboy/vim-markdown'
+
+" JSON.vim: JSON syntax highlighting.
+Plug 'elzr/vim-json'
 
 " vim-misc: Required for vim-session.
 Plug 'xolox/vim-misc'
@@ -125,6 +150,12 @@ Plug 'kana/vim-textobj-indent' | Plug 'kana/vim-textobj-user'
 " comittia: When vim launches from git commit, show 3 way split of commit
 " message editor, git status, and git diff.
 Plug 'rhysd/committia.vim'
+
+" ALE: Asynchronous Linting Engine.
+" Plug 'w0rp/ale'
+
+" Narrow Region: Edit regions in separate buffer.
+Plug 'chrisbra/NrrwRgn'
 
 " Color schemes.
 " Plug 'altercation/vim-colors-solarized' " solarized
@@ -152,9 +183,13 @@ filetype plugin indent on
 silent! colorscheme gruvbox
 
 " Font.
-"set guifont=Inconsolata-dz\ for\ Powerline:h12
-set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11
-"set guifont=Droid\ Sans\ Mono\ for\ Powerline:h12
+" set guifont=Inconsolata-dz\ for\ Powerline:h12
+" set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11
+set guifont=DejaVu\ Sans\ Code\ for\ Powerline:h12
+" set guifont=Droid\ Sans\ Mono\ for\ Powerline:h12
+" set guifont=Fira\ Code:h11
+" set guifont=Monoid:h11
+" set guifont=Hasklig:h12
 
 " Mouse scrolling enabled.
 set mouse+=a
@@ -173,9 +208,14 @@ let g:airline_theme = 'powerlineish'
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
+" Hide file encoding section
+let g:airline_section_y = ''
 
 " Line numbers.
 set number
+
+" Text wrap width.
+" set tw=80
 
 " Tab completion on filenames.
 set wildmode=longest,list,full
@@ -207,13 +247,13 @@ set listchars=tab:→\
 nmap <F7> :set list!<return>
 
 " Tab width.
-set tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab smarttab
+set tabstop=2 shiftwidth=2 softtabstop=2 expandtab smarttab
 
 " Indent guides.
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_enable_on_vim_startup = 1
-hi IndentGuidesEven ctermbg=232 guibg=#181818 guifg=fg
-hi IndentGuidesOdd ctermbg=233 guibg=#202020 guifg=fg
+hi IndentGuidesEven ctermbg=232 ctermfg=240 guibg=#181818 guifg=#606060
+hi IndentGuidesOdd ctermbg=233 ctermfg=240 guibg=#202020 guifg=#606060
 
 " Enable search highlight
 set hlsearch
@@ -222,17 +262,14 @@ set hlsearch
 set sessionoptions+=tabpages,globals
 
 " YouCompleteMe.
-let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
-
-" Browse .spk files with zip browser.
-au BufReadCmd *.spk call zip#Browse(expand("<amatch>"))
+"let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
 
 " Easy switching buffers.
 map gb :bnext<cr>
 map gB :bprevious<cr>
 
 " Tidy tools.
-command! Jsontidy execute "%!python -m json.tool"
+command! Jsontidy execute "%!jq"
 command! Xmltidy execute "%!xmllint --format -"
 
 " Autosave session.
@@ -255,6 +292,7 @@ map <leader>bt :tab sball<CR>
 
 " Increase number of gitgutter marks.
 let g:gitgutter_max_signs = 2048
+set updatetime=100
 
 " Switch symbol under cursor.
 map <leader>s :Switch<CR>
@@ -290,8 +328,13 @@ let g:netrw_banner = 0
 " 	autocmd VimEnter * :Vexplore
 " augroup END
 
+" Use JSON.vim on json files.
+au! BufRead,BufNewFile *.json set filetype=json
+
 " MacVim customizations.
 if has("gui_macvim")
+	" Would prefer ligatures, but MacVim doesn't render them properly.
+	set nomacligatures
 	set macmeta
 	" Press Ctrl-Tab to switch between open tabs (like browser tabs) to
 	" the right side. Ctrl-Shift-Tab goes the other way.
@@ -314,4 +357,7 @@ if has("gui_macvim")
 	noremap <D-9> :tabn 9<CR>
 	" Command-0 goes to the last tab
 	noremap <D-0> :tablast<CR>
+
+	" Remove full screen button from TouchBar
+	aunmenu TouchBar.EnterFullScreen
 endif
