@@ -17,12 +17,8 @@ set viminfo='100,n$HOME/.viminfo
 
 " Allow .vimrc/.vim work in alternate path outside of home dir.
 " Usage: vim -u <path_to_vimrc>
-if(exists($MYVIMRC))
-	let s:vimhome = expand($MYVIMRC . ':p:h') . '/.vim'
-else
-	let s:vimhome = $HOME . '/.vim'
-endif
-set rtp^=s:vimhome
+let $VIMHOME = expand($MYVIMRC . ':p:h') . '/.vim'
+set rtp^=$VIMHOME
 
 " Color scheme.
 syntax on
@@ -32,11 +28,11 @@ set t_Co=256
 
 " Plugins.
 " Auto-install vim-plug.
-if empty(glob(s:vimhome . '/autoload/plug.vim'))
-  silent exec '!curl -fLo ' . s:vimhome . '/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+if empty(glob($VIMHOME . '/autoload/plug.vim'))
+  silent exec '!curl -fLo ' . $VIMHOME . '/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
-silent! call plug#begin(s:vimhome . '/plugged')
+silent! call plug#begin($VIMHOME . '/plugged')
 " vim-airline: Powerline-like status line.
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -339,8 +335,8 @@ let g:netrw_banner = 0
 " Use JSON.vim on json files.
 au! BufRead,BufNewFile *.json set filetype=json
 
-" Set session save path, incase s:vimhome is custom.
-let g:session_directory = s:vimhome . '/sessions'
+" Set session save path, incase $VIMHOME is custom.
+let g:session_directory = $VIMHOME . '/sessions'
 
 " MacVim customizations.
 if has("gui_macvim")
