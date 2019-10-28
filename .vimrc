@@ -40,6 +40,8 @@ Plug 'vim-airline/vim-airline-themes'
 " vim-fugitive: Git commands.
 Plug 'tpope/vim-fugitive'
 
+Plug 'rhysd/git-messenger.vim'
+
 " vim-gitv: gitk-like repository viewer.
 Plug 'gregsexton/gitv', {'on': ['Gitv']}
 
@@ -62,14 +64,14 @@ Plug 'kien/ctrlp.vim'
 " Plug 'ajh17/VimCompletesMe'
 
 " Deoplete: Auto completion popups.
-" if has('nvim')
-" 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" else
-" 	Plug 'Shougo/deoplete.nvim'
-" 	Plug 'roxma/nvim-yarp'
-" 	Plug 'roxma/vim-hug-neovim-rpc'
-" endif
-" let g:deoplete#enable_at_startup = 1
+if has('nvim')
+	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+	Plug 'Shougo/deoplete.nvim'
+	Plug 'roxma/nvim-yarp'
+	Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
 
 " vim-indent-guides: Indicate indent level by coloration.
 Plug 'nathanaelkane/vim-indent-guides'
@@ -88,7 +90,10 @@ Plug 'kshenoy/vim-signature'
 
 " Ag: The Silver Searcher, search in files.
 " Must install ag tool. https://github.com/ggreer/the_silver_searcher#installing
-Plug 'rking/ag.vim'
+" Plug 'rking/ag.vim'
+
+" Ack: Search in files.
+Plug 'mileszs/ack.vim'
 
 " Tcomment: Code commenting commands.
 Plug 'tomtom/tcomment_vim'
@@ -176,20 +181,20 @@ Plug 'morhetz/gruvbox'
 " All of your Plugins must be added before the following line
 call plug#end()
 
-" set rtp+=~/.vim/bundle/Vundle.vim
 set rtp+=/usr/local/opt/fzf
 
 filetype plugin indent on
 
 " Color scheme.
 " http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html
-" silent! colorscheme mustang
+set termguicolors
 silent! colorscheme gruvbox
 
 " Font.
 " set guifont=Inconsolata-dz\ for\ Powerline:h12
-" set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h11
 set guifont=DejaVu\ Sans\ Code\ for\ Powerline:h12
+" set guifont=DejaVuSansMono\ Nerd\ Font:h12
+" set guifont=Inconsolata\ Nerd\ Font:h16
 " set guifont=Droid\ Sans\ Mono\ for\ Powerline:h12
 " set guifont=Fira\ Code:h11
 " set guifont=Monoid:h11
@@ -217,6 +222,7 @@ let g:airline_section_y = ''
 
 " Line numbers.
 set number
+set scrolloff=10
 
 " Text wrap width.
 " set tw=80
@@ -258,6 +264,7 @@ let g:indent_guides_auto_colors = 0
 let g:indent_guides_enable_on_vim_startup = 1
 hi IndentGuidesEven ctermbg=232 ctermfg=240 guibg=#181818 guifg=#606060
 hi IndentGuidesOdd ctermbg=233 ctermfg=240 guibg=#202020 guifg=#606060
+hi Comment gui=italic
 
 " Enable search highlight
 set hlsearch
@@ -337,6 +344,10 @@ au! BufRead,BufNewFile *.json set filetype=json
 
 " Set session save path, incase $VIMHOME is custom.
 let g:session_directory = $VIMHOME . '/sessions'
+
+" Customize ack.vim to use ag.
+let g:ackprg = 'ag --vimgrep --smart-case'
+cnoreabbrev Ag Ack
 
 " MacVim customizations.
 if has("gui_macvim")
