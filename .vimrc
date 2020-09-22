@@ -192,8 +192,10 @@ silent! colorscheme gruvbox
 
 " Font.
 " set guifont=Inconsolata-dz\ for\ Powerline:h12
-set guifont=DejaVu\ Sans\ Code\ for\ Powerline:h12
-" set guifont=DejaVuSansMono\ Nerd\ Font:h12
+" set guifont=DejaVu\ Sans\ Code\ for\ Powerline:h12
+" set guifont=DejaVuSansMono\ Nerd\ Font\ Mono:h14
+" https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/DejaVuSansMono/Regular/complete/DejaVu%20Sans%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
+set guifont=DejaVuSansMonoNerdFontCompleteM-Book:h14
 " set guifont=Inconsolata\ Nerd\ Font:h16
 " set guifont=Droid\ Sans\ Mono\ for\ Powerline:h12
 " set guifont=Fira\ Code:h11
