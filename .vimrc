@@ -15,6 +15,13 @@ set hidden
 filetype off
 set viminfo='100,n$HOME/.viminfo
 
+" https://github.com/macvim-dev/macvim/issues/818
+" After an update to Python3, the Deoplete plugin may fail to load with errors
+" about neovim plugin.  Usual fix:
+" brew link python@3.9
+set pyxversion=3
+set pythonthreedll=/usr/local/Frameworks/Python.framework/Versions/Current/Python
+
 " Allow .vimrc/.vim work in alternate path outside of home dir.
 " Usage: vim -u <path_to_vimrc>
 let $VIMHOME = expand('<sfile>:p:h') . '/.vim'
@@ -99,7 +106,7 @@ Plug 'mileszs/ack.vim'
 Plug 'tomtom/tcomment_vim'
 
 " vim-syntastic: Syntax checking tools.
-Plug 'vim-syntastic/syntastic'
+" Plug 'vim-syntastic/syntastic'
 
 " vim-startify: Default UI on startup.
 Plug 'mhinz/vim-startify'
@@ -124,9 +131,6 @@ Plug 'jelera/vim-javascript-syntax'
 
 " vim-jsx: Javascript/JSX syntax highlighting.
 " Plug 'mxw/vim-jsx'
-
-" tern for vim: Code analysis tool for Javascript.
-" Plug 'ternjs/tern_for_vim'
 
 " Markdown-Syntax: Markdown syntax highlighting.
 " Review: Not as good syntax highlighting and faulty indentation.  Use
@@ -178,6 +182,9 @@ Plug 'chrisbra/NrrwRgn'
 " Plug 'fugalh/desert.vim' " desert
 Plug 'morhetz/gruvbox'
 
+" vim-go
+Plug 'fatih/vim-go'
+
 " All of your Plugins must be added before the following line
 call plug#end()
 
@@ -195,7 +202,7 @@ silent! colorscheme gruvbox
 " set guifont=DejaVu\ Sans\ Code\ for\ Powerline:h12
 " set guifont=DejaVuSansMono\ Nerd\ Font\ Mono:h14
 " https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/DejaVuSansMono/Regular/complete/DejaVu%20Sans%20Mono%20Nerd%20Font%20Complete%20Mono.ttf
-set guifont=DejaVuSansMonoNerdFontCompleteM-Book:h14
+set guifont=DejaVuSansMonoNerdFontCompleteM-Book:h12
 " set guifont=Inconsolata\ Nerd\ Font:h16
 " set guifont=Droid\ Sans\ Mono\ for\ Powerline:h12
 " set guifont=Fira\ Code:h11
@@ -225,9 +232,6 @@ let g:airline_section_y = ''
 " Line numbers.
 set number
 set scrolloff=10
-
-" Text wrap width.
-" set tw=80
 
 " Tab completion on filenames.
 set wildmode=longest,list,full
@@ -274,12 +278,15 @@ set hlsearch
 " Enable sessions for Taboo.
 set sessionoptions+=tabpages,globals
 
-" YouCompleteMe.
-"let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
-
-" Easy switching buffers.
-map gb :bnext<cr>
-map gB :bprevious<cr>
+" Switch buffers.
+noremap gb :bnext!<CR>
+noremap gB :bprev!<CR>
+" Switch tabs.
+noremap gt :tabnext!<CR>
+noremap gT :tabprev!<CR>
+" Move tab page.
+" noremap <M-S-l> :tabm +<CR>
+" noremap <M-S-h> :tabm -<CR>
 
 " Tidy tools.
 command! Jsontidy execute "%!jq"
@@ -290,18 +297,15 @@ let g:session_autosave = 'yes'
 let g:session_autoload = 'yes'
 
 " Syntastic settings.
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['eslint']
-
-" Map convert buffers to tabs.
-map <leader>bt :tab sball<CR>
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" let g:syntastic_javascript_checkers = ['eslint']
 
 " Increase number of gitgutter marks.
 let g:gitgutter_max_signs = 2048
@@ -310,13 +314,8 @@ set updatetime=100
 " Switch symbol under cursor.
 map <leader>s :Switch<CR>
 
-" Tern settings.
-" let g:tern_show_argument_hints='on_hold'
-" let g:tern_map_keys=1
-
 " Syntax highlighting rules.
 augroup filetypedetect
-	au BufRead,BufNewFile .tern-project set filetype=json
 	au BufRead,BufNewFile .babelrc set filetype=json
 	au BufRead,BufNewFile .flowconfig set filetype=dosini
 	au BufRead,BufNewFile .npmrc set filetype=dosini
@@ -324,22 +323,15 @@ augroup filetypedetect
 augroup END
 
 " Map x to a different register than d.
-vmap X "_d
-vmap x "_d
+" vmap X "_d
+" vmap x "_d
 
 " Toggle paste mode: ;p.
 set pastetoggle=;p
 
-" netrw customizations.
-" https://shapeshed.com/vim-netrw/
-let g:netrw_banner = 0
-" let g:netrw_liststyle = 3
-" let g:netrw_browse_split = 4
-" let g:netrw_winsize = 25
-" augroup ProjectDrawer
-" 	autocmd!
-" 	autocmd VimEnter * :Vexplore
-" augroup END
+" Disable netrw.  https://stackoverflow.com/questions/21686729/vim-how-to-remove-netrw
+" I'd use it, but it doesn't play well with :bnext/:bprev.
+let loaded_netrwPlugin = 1
 
 " Use JSON.vim on json files.
 au! BufRead,BufNewFile *.json set filetype=json
@@ -350,33 +342,47 @@ let g:session_directory = $VIMHOME . '/sessions'
 " Customize ack.vim to use ag.
 let g:ackprg = 'ag --vimgrep --smart-case'
 cnoreabbrev Ag Ack
+nnoremap <Leader>a :Ack!<Space>
+
+" vim-go
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+autocmd FileType go nmap <leader>t  <Plug>(go-test)
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_fmt_autosave = 0
 
 " MacVim customizations.
 if has("gui_macvim")
 	" Would prefer ligatures, but MacVim doesn't render them properly.
 	set nomacligatures
 	set macmeta
+
 	" Press Ctrl-Tab to switch between open tabs (like browser tabs) to
 	" the right side. Ctrl-Shift-Tab goes the other way.
-	noremap <C-Tab> :tabnext<CR>
-	noremap <C-S-Tab> :tabprev<CR>
-	noremap <M-l> :bnext!<CR>
-	noremap <M-h> :bprev!<CR>
+	" noremap <C-Tab> :tabnext<CR>
+	" noremap <C-S-Tab> :tabprev<CR>
 	noremap <D-]> :bnext!<CR>
 	noremap <D-[> :bprev!<CR>
 
 	" Switch to specific tab numbers with Command-number.
-	noremap <D-1> :tabn 1<CR>
-	noremap <D-2> :tabn 2<CR>
-	noremap <D-3> :tabn 3<CR>
-	noremap <D-4> :tabn 4<CR>
-	noremap <D-5> :tabn 5<CR>
-	noremap <D-6> :tabn 6<CR>
-	noremap <D-7> :tabn 7<CR>
-	noremap <D-8> :tabn 8<CR>
-	noremap <D-9> :tabn 9<CR>
+	" noremap <D-1> :tabn 1<CR>
+	" noremap <D-2> :tabn 2<CR>
+	" noremap <D-3> :tabn 3<CR>
+	" noremap <D-4> :tabn 4<CR>
+	" noremap <D-5> :tabn 5<CR>
+	" noremap <D-6> :tabn 6<CR>
+	" noremap <D-7> :tabn 7<CR>
+	" noremap <D-8> :tabn 8<CR>
+	" noremap <D-9> :tabn 9<CR>
 	" Command-0 goes to the last tab
-	noremap <D-0> :tablast<CR>
+	" noremap <D-0> :tablast<CR>
 
 	" Remove full screen button from TouchBar
 	aunmenu TouchBar.EnterFullScreen

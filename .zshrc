@@ -2,12 +2,11 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 export GOPATH=$HOME/go
 export GOROOT=$(brew --prefix golang)/libexec
-export PATH=$PATH:$HOME/bin:/Applications/MySQLWorkbench.app/Contents/MacOS:$GOPATH/bin:$GOROOT/bin:$HOME/Library/Python/3.7/bin
+export GOPRIVATE=src.sevone.com
+export PATH=$PATH:$HOME/go/bin:$HOME/Library/Python/3.8/bin
+
 export COMPOSE_HTTP_TIMEOUT=86400
 export NODE_TLS_REJECT_UNAUTHORIZED=0
-
-# powerline-daemon -q
-# powerline-config tmux setup
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/spoulson/.oh-my-zsh"
@@ -17,9 +16,10 @@ export ZSH="/Users/spoulson/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
-# ZSH_THEME="agnoster"
 # ZSH_THEME="powerlevel9k"
-ZSH_THEME="draconian/draconian"
+# ZSH_THEME="draconian/draconian"
+# ZSH_THEME="amuse"
+ZSH_THEME="dracula"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -93,6 +93,7 @@ plugins=(
   zsh-autosuggestions
   colored-man-pages
   zsh-syntax-highlighting
+  z
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -129,8 +130,6 @@ EDITOR=vim
 PAGER=less
 ZSH_COLORIZE_STYLE="default"
 ZSH_TMUX_AUTOSTART="true"
-# DRACULA_DISPLAY_TIME=1
-# DRACULA_DISPLAY_CONTEXT=1
 
 # http://www.bashoneliners.com/oneliners/oneliner/220/
 # Preserve your fingers from cd ..; cd ..; cd ..; cd ..;
@@ -144,6 +143,4 @@ function up() {
 }
 
 alias jsontidy='python -m json.tool'
-alias strip-ansi='sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[m|K]//g"'
-
-# source $HOME/retina-functions.sh
+alias nocolor="sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g'"

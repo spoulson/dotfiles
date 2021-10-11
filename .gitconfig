@@ -2,14 +2,16 @@
 	ui = auto
 [alias]
 	st = status
-	br = branch -v
+  br = branch -v --sort=authordate
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	stash-rename = "!_() { rev=$(git rev-parse $1) && git stash drop $1 || exit 1 ; git stash store -m \"$2\" $rev; }; _"
 [core]
 	editor = vim
-	excludesfile = $HOME/.gitignore_global
-[user]
-	name = Shawn Poulson
-	email = spoulson@explodingcoder.com
+	excludesfile = /Users/spoulson/.gitignore
 [push]
 	default = current
+[user]
+	email = spoulson@sevone.com
+	name = Shawn Poulson
+[pull]
+	rebase = false
