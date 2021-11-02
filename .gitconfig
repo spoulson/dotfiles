@@ -11,7 +11,7 @@
 [push]
 	default = current
 [user]
-	email = spoulson@sevone.com
+	email = shawn@explodingcoder.com
 	name = Shawn Poulson
 [pull]
 	rebase = false
