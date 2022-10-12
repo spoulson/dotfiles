@@ -18,7 +18,9 @@ set viminfo='100,n$HOME/.viminfo
 " https://github.com/macvim-dev/macvim/issues/818
 " After an update to Python3, the Deoplete plugin may fail to load with errors
 " about neovim plugin.  Usual fix:
-" brew link python@3.9
+" brew upgrade python
+" brew link --overwrite python --force
+" pip3 install --user --upgrade pynvim
 set pyxversion=3
 set pythonthreedll=/usr/local/Frameworks/Python.framework/Versions/Current/Python
 
@@ -27,11 +29,19 @@ set pythonthreedll=/usr/local/Frameworks/Python.framework/Versions/Current/Pytho
 let $VIMHOME = expand('<sfile>:p:h') . '/.vim'
 set rtp^=$VIMHOME
 
+" Prevent using zsh when running shell commands.
+set shell=/bin/bash
+
 " Color scheme.
 syntax on
 set background=dark
 let g:solarized_termcolors=256
 set t_Co=256
+
+" Folding.
+set nofoldenable
+set foldlevel=20
+set foldmethod=syntax
 
 " Plugins.
 " Auto-install vim-plug.
@@ -185,6 +195,9 @@ Plug 'morhetz/gruvbox'
 " vim-go
 Plug 'fatih/vim-go'
 
+" Syntax HCL
+Plug 'jvirtanen/vim-hcl'
+
 " All of your Plugins must be added before the following line
 call plug#end()
 
@@ -257,8 +270,8 @@ au FileType gitcommit set textwidth=0 wrapmargin=0
 " Visible tabs, off by default.
 " Use ':set [list|nolist]' to enable/disable on demand.
 set nolist
-"set listchars=tab:▸\ 
-set listchars=tab:→\ 
+"set listchars=tab:▸\
+set listchars=tab:→⣿
 " F7: toggle display of tabs/spaces/etc
 nmap <F7> :set list!<return>
 
@@ -355,8 +368,14 @@ let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
+let g:go_highlight_function_parameters = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_format_strings = 1
+let g:go_highlight_variable_declarations = 1
+let g:go_highlight_variable_assignments = 1
 let g:go_highlight_operators = 1
 let g:go_fmt_autosave = 0
+let g:go_fold_enable = ['block', 'varconst']
 
 " MacVim customizations.
 if has("gui_macvim")
