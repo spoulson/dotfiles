@@ -11,7 +11,15 @@
 [push]
 	default = current
 [user]
-	email = shawn@explodingcoder.com
+	email = shawn@ethn.net
 	name = Shawn Poulson
 [pull]
 	rebase = false
+
+# Override SSH protocol on Mailgun repos.
+# [url "ssh://git@github.com/mailgun/"]
+# 	insteadOf = https://github.com/mailgun/
+
+# Override SSH key for directory tree.
+# [includeIf "gitdir:~/src/spoulson/"]
+#   path = .gitconfig-spoulson
