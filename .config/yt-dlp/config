@@ -1,0 +1,14 @@
+-i
+--merge-output-format mkv
+-o %(title)s/%(title)s.%(ext)s
+--write-info-json
+--embed-thumbnail
+--write-thumbnail
+--convert-thumbnails jpg --convert-thumbnails png
+--embed-subs
+--write-subs
+--write-auto-subs
+--embed-metadata
+--add-metadata
+--no-write-playlist-metafiles
+--retries 1000
