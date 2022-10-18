@@ -40,3 +40,6 @@ indent_size = 2
 
 [job.nomad]
 indent_size = 2
+
+[.gitconfig]
+indent_style = tab
