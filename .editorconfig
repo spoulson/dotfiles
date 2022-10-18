@@ -23,7 +23,7 @@ indent_style = tab
 trim_trailing_whitespace = false
 indent_size = 3
 
-[*.{js|json|ts}]
+[*.{js,json,ts}]
 indent_size = 2
 
 [*.py]
@@ -34,3 +34,9 @@ indent_size = 2
 
 [*.go]
 indent_style = tab
+
+[*.{yaml,yml}]
+indent_size = 2
+
+[job.nomad]
+indent_size = 2
